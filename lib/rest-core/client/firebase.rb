@@ -11,6 +11,7 @@ module RestCore
     use DefaultHeaders, {'Accept' => 'application/json'}
     use DefaultQuery  , nil
 
+    use FollowRedirect, 1
     use CommonLogger  , nil
     use Cache         , nil, 600 do
       use ErrorHandler, lambda{ |env|
