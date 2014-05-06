@@ -26,6 +26,9 @@ module RestCore::Firebase::Client
   include RestCore
 
   def generate_auth opts={}
+    raise Firebase::Error::ClientError.new(
+      "Please set your secret") unless secret
+
     header = {:typ => 'JWT', :alg => 'HS256'}
     claims = {:v => 0, :iat => Time.now.to_i, :d => d}.merge(opts)
     # http://tools.ietf.org/html/draft-ietf-jose-json-web-signature-26
