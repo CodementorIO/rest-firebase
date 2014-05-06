@@ -37,10 +37,10 @@ module RestCore::Firebase::Client
     "#{input}.#{base64url(Hmac.sha256(secret, input))}"
   end
 
-  def request env, key=RESPONSE_BODY, app=app
+  def request env, app=app
     super(env.merge(REQUEST_PATH    => "#{env[REQUEST_PATH]}.json",
                     REQUEST_PAYLOAD => Json.encode(env[REQUEST_PAYLOAD])),
-          key, app)
+          app)
   end
 
   private
