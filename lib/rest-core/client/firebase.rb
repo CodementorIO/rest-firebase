@@ -14,11 +14,51 @@ module RestCore
     use FollowRedirect, 1
     use CommonLogger  , nil
     use Cache         , nil, 600 do
-      use ErrorHandler, lambda{ |env|
-        RuntimeError.new(env[RESPONSE_BODY]['message'])}
+      use ErrorHandler, lambda{ |env| Firebase::Error.call(env) }
       use ErrorDetectorHttp
       use JsonResponse, true
     end
+  end
+end
+
+class RestCore::Firebase::Error < RestCore::Error
+  include RestCore
+  class ServerError         < Firebase::Error; end
+  class ClientError         < RestCore::Error; end
+
+  class BadRequest          < Firebase::Error; end
+  class Unauthorized        < Firebase::Error; end
+  class Forbidden           < Firebase::Error; end
+  class NotFound            < Firebase::Error; end
+  class NotAcceptable       < Firebase::Error; end
+  class ExpectationFailed   < Firebase::Error; end
+
+  class InternalServerError < Firebase::Error::ServerError; end
+  class BadGateway          < Firebase::Error::ServerError; end
+  class ServiceUnavailable  < Firebase::Error::ServerError; end
+
+  attr_reader :error, :code, :url
+  def initialize error, code, url=''
+    @error, @code, @url = error, code, url
+    super("[#{code}] #{error.inspect} from #{url}")
+  end
+
+  def self.call env
+    error, code, url = env[RESPONSE_BODY], env[RESPONSE_STATUS],
+                       env[REQUEST_URI]
+    return new(error, code, url) unless error.kind_of?(Hash)
+    case code
+      when 400; BadRequest
+      when 401; Unauthorized
+      when 403; Forbidden
+      when 404; NotFound
+      when 406; NotAcceptable
+      when 417; ExpectationFailed
+      when 500; InternalServerError
+      when 502; BadGateway
+      when 503; ServiceUnavailable
+      else    ; self
+    end.new(error, code, url)
   end
 end
 
