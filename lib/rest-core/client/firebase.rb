@@ -65,6 +65,22 @@ end
 module RestCore::Firebase::Client
   include RestCore
 
+  class EventSource < RestCore::EventSource
+    def onmessage event=nil, sock=nil
+      if event
+        super(event.merge('data' => Json.decode(event['data'])), sock)
+      else
+        super
+      end
+    end
+  end
+
+  def request env, app=app
+    super(env.merge(REQUEST_PATH    => "#{env[REQUEST_PATH]}.json",
+                    REQUEST_PAYLOAD => Json.encode(env[REQUEST_PAYLOAD])),
+          app)
+  end
+
   def generate_auth opts={}
     raise Firebase::Error::ClientError.new(
       "Please set your secret") unless secret
@@ -77,12 +93,6 @@ module RestCore::Firebase::Client
     "#{input}.#{base64url(Hmac.sha256(secret, input))}"
   end
 
-  def request env, app=app
-    super(env.merge(REQUEST_PATH    => "#{env[REQUEST_PATH]}.json",
-                    REQUEST_PAYLOAD => Json.encode(env[REQUEST_PAYLOAD])),
-          app)
-  end
-
   private
   def base64url str; [str].pack('m').tr('+/', '-_'); end
   def default_query; {:auth => auth}; end
@@ -91,4 +101,5 @@ end
 
 class RestCore::Firebase
   include RestCore::Firebase::Client
+  self.event_source_class = EventSource
 end

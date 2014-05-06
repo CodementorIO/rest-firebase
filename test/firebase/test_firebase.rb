@@ -29,6 +29,29 @@ describe RC::Firebase do
     firebase.put('https://a', rbon).should.eq rbon
   end
 
+  should 'parse event source' do
+    stub_request(:get, path).to_return(:body => <<-SSE)
+event: put
+data: {}
+
+event: keep-alive
+data: null
+
+event: invalid
+data: invalid
+SSE
+    m = [{'event' => 'put'       , 'data' => {}},
+         {'event' => 'keep-alive', 'data' => nil}]
+    es = firebase.event_source('https://a')
+    es.should.kind_of RC::Firebase::Client::EventSource
+    es.onmessage do |event|
+      event.should.eq m.shift
+    end.onerror do |error|
+      error.should.kind_of RC::Json::ParseError
+    end.start.wait
+    m.should.empty
+  end
+
   check = lambda do |status, klass|
     stub_request(:delete, path).to_return(
       :body => '{}', :status => status)
