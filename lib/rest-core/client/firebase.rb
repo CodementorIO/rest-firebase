@@ -66,9 +66,9 @@ module RestCore::Firebase::Client
   include RestCore
 
   class EventSource < RestCore::EventSource
-    def onmessage event=nil, sock=nil
+    def onmessage event=nil, data=nil, sock=nil
       if event
-        super(event.merge('data' => Json.decode(event['data'])), sock)
+        super(event, Json.decode(data), sock)
       else
         super
       end

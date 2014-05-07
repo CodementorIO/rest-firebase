@@ -44,8 +44,8 @@ SSE
          {'event' => 'keep-alive', 'data' => nil}]
     es = firebase.event_source('https://a')
     es.should.kind_of RC::Firebase::Client::EventSource
-    es.onmessage do |event|
-      event.should.eq m.shift
+    es.onmessage do |event, data|
+      {'event' => event, 'data' => data}.should.eq m.shift
     end.onerror do |error|
       error.should.kind_of RC::Json::ParseError
     end.start.wait
