@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
   ".gitignore",
   ".gitmodules",
   ".travis.yml",
+  "CHANGES.md",
   "Gemfile",
   "LICENSE",
   "README.md",
