@@ -3,39 +3,37 @@ require 'rest-core'
 
 # https://www.firebase.com/docs/security/custom-login.html
 # https://www.firebase.com/docs/rest-api.html
-module RestCore
-  Firebase = Builder.client(:d, :secret, :auth) do
-    use Timeout       , 10
+RestFirebase = RC::Builder.client(:d, :secret, :auth) do
+  use RC::Timeout       , 10
 
-    use DefaultSite   , 'https://SampleChat.firebaseIO-demo.com/'
-    use DefaultHeaders, {'Accept' => 'application/json'}
-    use DefaultQuery  , nil
+  use RC::DefaultSite   , 'https://SampleChat.firebaseIO-demo.com/'
+  use RC::DefaultHeaders, {'Accept' => 'application/json'}
+  use RC::DefaultQuery  , nil
 
-    use FollowRedirect, 1
-    use CommonLogger  , nil
-    use Cache         , nil, 600 do
-      use ErrorHandler, lambda{ |env| Firebase::Error.call(env) }
-      use ErrorDetectorHttp
-      use JsonResponse, true
-    end
+  use RC::FollowRedirect, 1
+  use RC::CommonLogger  , nil
+  use RC::Cache         , nil, 600 do
+    use RC::ErrorHandler, lambda{ |env| RestFirebase::Error.call(env) }
+    use RC::ErrorDetectorHttp
+    use RC::JsonResponse, true
   end
 end
 
-class RestCore::Firebase::Error < RestCore::Error
+class RestFirebase::Error < RestCore::Error
   include RestCore
-  class ServerError         < Firebase::Error; end
+  class ServerError         < RestFirebase::Error; end
   class ClientError         < RestCore::Error; end
 
-  class BadRequest          < Firebase::Error; end
-  class Unauthorized        < Firebase::Error; end
-  class Forbidden           < Firebase::Error; end
-  class NotFound            < Firebase::Error; end
-  class NotAcceptable       < Firebase::Error; end
-  class ExpectationFailed   < Firebase::Error; end
+  class BadRequest          < RestFirebase::Error; end
+  class Unauthorized        < RestFirebase::Error; end
+  class Forbidden           < RestFirebase::Error; end
+  class NotFound            < RestFirebase::Error; end
+  class NotAcceptable       < RestFirebase::Error; end
+  class ExpectationFailed   < RestFirebase::Error; end
 
-  class InternalServerError < Firebase::Error::ServerError; end
-  class BadGateway          < Firebase::Error::ServerError; end
-  class ServiceUnavailable  < Firebase::Error::ServerError; end
+  class InternalServerError < RestFirebase::Error::ServerError; end
+  class BadGateway          < RestFirebase::Error::ServerError; end
+  class ServiceUnavailable  < RestFirebase::Error::ServerError; end
 
   attr_reader :error, :code, :url
   def initialize error, code, url=''
@@ -62,7 +60,7 @@ class RestCore::Firebase::Error < RestCore::Error
   end
 end
 
-module RestCore::Firebase::Client
+module RestFirebase::Client
   include RestCore
 
   class EventSource < RestCore::EventSource
@@ -82,7 +80,7 @@ module RestCore::Firebase::Client
   end
 
   def generate_auth opts={}
-    raise Firebase::Error::ClientError.new(
+    raise RestFirebase::Error::ClientError.new(
       "Please set your secret") unless secret
 
     header = {:typ => 'JWT', :alg => 'HS256'}
@@ -99,7 +97,7 @@ module RestCore::Firebase::Client
   def default_auth ; generate_auth  ; end
 end
 
-class RestCore::Firebase
-  include RestCore::Firebase::Client
+class RestFirebase
+  include RestFirebase::Client
   self.event_source_class = EventSource
 end

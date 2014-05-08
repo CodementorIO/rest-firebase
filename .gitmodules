@@ -1,0 +1,6 @@
+[submodule "rest-core"]
+	path = rest-core
+	url = git://github.com/godfat/rest-core.git
+[submodule "task"]
+	path = task
+	url = git://github.com/godfat/gemgem.git

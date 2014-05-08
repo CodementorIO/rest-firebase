@@ -1,7 +1,8 @@
 
-require 'rest-more/test'
+require 'rest-firebase'
+require 'rest-core/test'
 
-describe RC::Firebase do
+describe RestFirebase do
   before do
     stub(Time).now{ Time.at(0) }
   end
@@ -14,7 +15,7 @@ describe RC::Firebase do
   path = 'https://a.json?auth=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9%0A.eyJ2IjowLCJpYXQiOjAsImQiOm51bGx9%0A.C9JtzZhiCrsClNdAQcE7Irngr2BZJCH4x1p-IHxfrAo%3D%0A'
 
   def firebase
-    RC::Firebase.new(:secret => 'nnf')
+    RestFirebase.new(:secret => 'nnf')
   end
 
   should 'get true' do
@@ -43,7 +44,7 @@ SSE
     m = [{'event' => 'put'       , 'data' => {}},
          {'event' => 'keep-alive', 'data' => nil}]
     es = firebase.event_source('https://a')
-    es.should.kind_of RC::Firebase::Client::EventSource
+    es.should.kind_of RestFirebase::Client::EventSource
     es.onmessage do |event, data|
       {'event' => event, 'data' => data}.should.eq m.shift
     end.onerror do |error|
@@ -63,10 +64,10 @@ SSE
 
   should 'raise exception when encountering error' do
     [400, 401, 402, 403, 404, 406, 417].each do |status|
-      check[status, RC::Firebase::Error]
+      check[status, RestFirebase::Error]
     end
     [500, 502, 503].each do |status|
-      check[status, RC::Firebase::Error::ServerError]
+      check[status, RestFirebase::Error::ServerError]
     end
   end
 end

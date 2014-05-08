@@ -1,0 +1,9 @@
+before_install: 'git submodule update --init'
+script: 'ruby -r bundler/setup -S rake test:travis'
+
+rvm:
+  - 1.9.3
+  - 2.0.0
+  - ruby
+  - rbx-2
+  - jruby
