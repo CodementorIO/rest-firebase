@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   "Codementor",
   "Lin Jen-Shin (godfat)"]
   s.date = "2014-05-09"
-  s.description = "Firebase REST API client built on top of [rest-core][].\n\n[rest-core]: https://github.com/godfat/rest-core"
+  s.description = "Ruby Firebase REST API client built on top of [rest-core][].\n\n[rest-core]: https://github.com/godfat/rest-core"
   s.email = ["help@codementor.io"]
   s.files = [
   ".gitignore",
@@ -30,7 +30,7 @@ Gem::Specification.new do |s|
   s.homepage = "https://github.com/CodementorIO/rest-firebase"
   s.licenses = ["Apache License 2.0"]
   s.rubygems_version = "2.2.2"
-  s.summary = "Firebase REST API client built on top of [rest-core][]."
+  s.summary = "Ruby Firebase REST API client built on top of [rest-core][]."
   s.test_files = ["test/test_api.rb"]
 
   if s.respond_to? :specification_version then

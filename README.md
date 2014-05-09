@@ -12,7 +12,7 @@ by [Codementor][]
 
 ## DESCRIPTION:
 
-Firebase REST API client built on top of [rest-core][].
+Ruby Firebase REST API client built on top of [rest-core][].
 
 [rest-core]: https://github.com/godfat/rest-core
 
