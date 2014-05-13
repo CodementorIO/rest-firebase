@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   "LICENSE",
   "README.md",
   "Rakefile",
+  "TODO.md",
   "lib/rest-firebase.rb",
   "rest-firebase.gemspec",
   "task/README.md",
