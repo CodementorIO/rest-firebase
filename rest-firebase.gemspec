@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.authors = [
   "Codementor",
   "Lin Jen-Shin (godfat)"]
-  s.date = "2014-05-09"
+  s.date = "2014-05-13"
   s.description = "Ruby Firebase REST API client built on top of [rest-core][].\n\n[rest-core]: https://github.com/godfat/rest-core"
   s.email = ["help@codementor.io"]
   s.files = [
@@ -37,11 +37,11 @@ Gem::Specification.new do |s|
     s.specification_version = 4
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<rest-core>, [">= 3.0.0"])
+      s.add_runtime_dependency(%q<rest-core>, [">= 3.1.1"])
     else
-      s.add_dependency(%q<rest-core>, [">= 3.0.0"])
+      s.add_dependency(%q<rest-core>, [">= 3.1.1"])
     end
   else
-    s.add_dependency(%q<rest-core>, [">= 3.0.0"])
+    s.add_dependency(%q<rest-core>, [">= 3.1.1"])
   end
 end

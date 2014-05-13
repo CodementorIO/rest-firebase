@@ -135,6 +135,51 @@ For a detailed explanation, see:
 
 [future]: https://github.com/godfat/rest-core#advanced-concurrent-http-requests----embrace-the-future
 
+### Thread Pool / Connection Pool
+
+Underneath, rest-core would spawn a thread for each request, freeing you
+from blocking. However, occasionally we would not want this behaviour,
+giving that we might have limited resource and cannot maximize performance.
+
+For example, maybe we could not afford so many threads running concurrently,
+or the target server cannot accept so many concurrent connections. In those
+cases, we would want to have limited concurrent threads or connections.
+
+``` ruby
+RestFirebase.pool_size = 10
+RestFirebase.pool_idle_time = 60
+```
+
+This could set the thread pool size to 10, having a maximum of 10 threads
+running together, growing from requests. Each threads idled more than 60
+seconds would be shut down automatically.
+
+Note that `pool_size` should at least be larger than 4, or it might be
+very likely to have _deadlock_ if you're using nested callbacks and having
+a large number of concurrent calls.
+
+Also, setting `pool_size` to `-1` would mean we want to make blocking
+requests, without spawning any threads. This might be useful for debugging.
+
+### Gracefully shutdown
+
+To shutdown gracefully, consider shutdown the thread pool (if we're using it),
+and wait for all requests for a given client. For example:
+
+``` ruby
+RestFirebase.shutdown
+```
+
+We could put them in `at_exit` callback like this:
+
+``` ruby
+at_exit do
+  RestFirebase.shutdown
+end
+```
+
+If you're using unicorn, you probably want to put that in the config.
+
 ## Powered sites:
 
 * [Codementor][]
