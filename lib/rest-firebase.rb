@@ -7,7 +7,8 @@ RestFirebase = RC::Builder.client(:d, :secret, :auth) do
   use RC::Timeout       , 10
 
   use RC::DefaultSite   , 'https://SampleChat.firebaseIO-demo.com/'
-  use RC::DefaultHeaders, {'Accept' => 'application/json'}
+  use RC::DefaultHeaders, {'Accept' => 'application/json',
+                           'Content-Type' => 'application/json'}
   use RC::DefaultQuery  , nil
 
   use RC::FollowRedirect, 1
