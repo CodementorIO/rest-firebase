@@ -75,9 +75,14 @@ module RestFirebase::Client
   end
 
   def request env, app=app
-    super(env.merge(REQUEST_PATH    => "#{env[REQUEST_PATH]}.json",
-                    REQUEST_PAYLOAD => Json.encode(env[REQUEST_PAYLOAD])),
-          app)
+    path = "#{env[REQUEST_PATH]}.json"
+    payload = if env[REQUEST_PAYLOAD]
+      {REQUEST_PAYLOAD => Json.encode(env[REQUEST_PAYLOAD])}
+    else
+      {}
+    end
+
+    super(env.merge(REQUEST_PATH => path).merge(payload), app)
   end
 
   def generate_auth opts={}

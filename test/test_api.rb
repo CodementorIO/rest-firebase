@@ -14,6 +14,9 @@ describe RestFirebase do
 
   path = 'https://a.json?auth=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9%0A.eyJ2IjowLCJpYXQiOjAsImQiOm51bGx9%0A.C9JtzZhiCrsClNdAQcE7Irngr2BZJCH4x1p-IHxfrAo%3D%0A'
 
+  json = '{"status":"ok"}'
+  rbon = {'status' => 'ok'}
+
   def firebase
     RestFirebase.new(:secret => 'nnf')
   end
@@ -24,10 +27,13 @@ describe RestFirebase do
   end
 
   should 'put {"status":"ok"}' do
-    json = '{"status":"ok"}'
-    rbon = {'status' => 'ok'}
     stub_request(:put, path).with(:body => json).to_return(:body => json)
     firebase.put('https://a', rbon).should.eq rbon
+  end
+
+  should 'have no payload for delete' do
+    stub_request(:delete, path).with(:body => nil).to_return(:body => json)
+    firebase.delete('https://a').should.eq rbon
   end
 
   should 'parse event source' do
