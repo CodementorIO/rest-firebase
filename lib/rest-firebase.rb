@@ -3,7 +3,7 @@ require 'rest-core'
 
 # https://www.firebase.com/docs/security/custom-login.html
 # https://www.firebase.com/docs/rest-api.html
-RestFirebase = RC::Builder.client(:d, :secret, :auth) do
+RestFirebase = RC::Builder.client(:d, :secret, :auth, :iat) do
   use RC::Timeout       , 10
 
   use RC::DefaultSite   , 'https://SampleChat.firebaseIO-demo.com/'
@@ -75,6 +75,8 @@ module RestFirebase::Client
   end
 
   def request env, app=app
+    check_auth
+
     path = "#{env[REQUEST_PATH]}.json"
     payload = if env[REQUEST_PAYLOAD]
       {REQUEST_PAYLOAD => Json.encode(env[REQUEST_PAYLOAD])}
@@ -90,7 +92,7 @@ module RestFirebase::Client
       "Please set your secret") unless secret
 
     header = {:typ => 'JWT', :alg => 'HS256'}
-    claims = {:v => 0, :iat => Time.now.to_i, :d => d}.merge(opts)
+    claims = {:v => 0, :iat => iat, :d => d}.merge(opts)
     # http://tools.ietf.org/html/draft-ietf-jose-json-web-signature-26
     input = [header, claims].map{ |d| base64url(Json.encode(d)) }.join('.')
     # http://tools.ietf.org/html/draft-ietf-oauth-json-web-token-20
@@ -101,6 +103,11 @@ module RestFirebase::Client
   def base64url str; [str].pack('m').tr('+/', '-_'); end
   def default_query; {:auth => auth}; end
   def default_auth ; generate_auth  ; end
+  def default_iat  ; Time.now.to_i  ; end
+
+  def check_auth
+    self.auth = nil if iat && Time.now.to_i - iat > 82800
+  end
 end
 
 class RestFirebase

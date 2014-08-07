@@ -59,6 +59,17 @@ SSE
     m.should.empty?
   end
 
+  would 'refresh token' do
+    mock(Time).now{ Time.at(1) }
+    auth = firebase.auth
+    Muack.verify(Time)
+    stub(Time).now{ Time.at(0) }
+
+    stub_request(:get, path).to_return(:body => 'true')
+    firebase.get('https://a').should.eq true
+    firebase.auth.should.not.eq auth
+  end
+
   define_method :check do |status, klass|
     stub_request(:delete, path).to_return(
       :body => '{}', :status => status)
