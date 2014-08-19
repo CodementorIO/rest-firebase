@@ -13,11 +13,10 @@ RestFirebase = RC::Builder.client(:d, :secret, :auth, :iat) do
 
   use RC::FollowRedirect, 1
   use RC::CommonLogger  , nil
-  use RC::Cache         , nil, 600 do
-    use RC::ErrorHandler, lambda{ |env| RestFirebase::Error.call(env) }
-    use RC::ErrorDetectorHttp
-    use RC::JsonResponse, true
-  end
+  use RC::ErrorHandler  , lambda{ |env| RestFirebase::Error.call(env) }
+  use RC::ErrorDetectorHttp
+  use RC::JsonResponse  , true
+  use RC::Cache         , nil, 600
 end
 
 class RestFirebase::Error < RestCore::Error
