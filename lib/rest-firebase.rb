@@ -3,7 +3,7 @@ require 'rest-core'
 
 # https://www.firebase.com/docs/security/custom-login.html
 # https://www.firebase.com/docs/rest-api.html
-RestFirebase = RC::Builder.client(:d, :secret, :auth, :iat) do
+RestFirebase = RC::Builder.client(:d, :secret, :auth, :auth_ttl, :iat) do
   use RC::Timeout       , 10
 
   use RC::DefaultSite   , 'https://SampleChat.firebaseIO-demo.com/'
@@ -100,12 +100,13 @@ module RestFirebase::Client
 
   private
   def base64url str; [str].pack('m').tr('+/', '-_'); end
-  def default_query; {:auth => auth}; end
-  def default_auth ; generate_auth  ; end
-  def default_iat  ; Time.now.to_i  ; end
+  def default_query   ; {:auth => auth}; end
+  def default_auth    ; generate_auth  ; end
+  def default_auth_ttl; 82800          ; end
+  def default_iat     ; Time.now.to_i  ; end
 
   def check_auth
-    self.auth = nil if iat && Time.now.to_i - iat > 82800
+    self.auth = nil if Time.now.to_i - iat > auth_ttl
   end
 end
 
