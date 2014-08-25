@@ -106,7 +106,7 @@ module RestFirebase::Client
   def default_iat     ; Time.now.to_i  ; end
 
   def check_auth
-    self.auth = nil if Time.now.to_i - iat > auth_ttl
+    self.auth, self.iat = nil if Time.now.to_i - iat > auth_ttl
   end
 end
 

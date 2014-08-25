@@ -4,7 +4,7 @@ require 'rest-core/test'
 
 Pork::API.describe RestFirebase do
   before do
-    stub(Time).now{ Time.at(0) }
+    stub(Time).now{ Time.at(86400) }
   end
 
   after do
@@ -12,13 +12,13 @@ Pork::API.describe RestFirebase do
     Muack.verify
   end
 
-  path = 'https://a.json?auth=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9%0A.eyJ2IjowLCJpYXQiOjAsImQiOm51bGx9%0A.C9JtzZhiCrsClNdAQcE7Irngr2BZJCH4x1p-IHxfrAo%3D%0A'
+  path = 'https://a.json?auth=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9%0A.eyJ2IjowLCJpYXQiOjg2NDAwLCJkIjpudWxsfQ%3D%3D%0A.cAZWmKD66jARF-BXEi5J1aqJ6khDbFdPAfAqXVbGpZk%3D%0A'
 
   json = '{"status":"ok"}'
   rbon = {'status' => 'ok'}
 
   def firebase
-    RestFirebase.new(:secret => 'nnf')
+    @firebase ||= RestFirebase.new(:secret => 'nnf')
   end
 
   would 'get true' do
@@ -60,10 +60,10 @@ SSE
   end
 
   would 'refresh token' do
-    mock(Time).now{ Time.at(1) }
+    mock(Time).now{ Time.at(0) }
     auth = firebase.auth
     Muack.verify(Time)
-    stub(Time).now{ Time.at(0) }
+    stub(Time).now{ Time.at(86400) }
 
     stub_request(:get, path).to_return(:body => 'true')
     firebase.get('https://a').should.eq true
