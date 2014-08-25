@@ -90,6 +90,7 @@ module RestFirebase::Client
     raise RestFirebase::Error::ClientError.new(
       "Please set your secret") unless secret
 
+    self.iat = nil
     header = {:typ => 'JWT', :alg => 'HS256'}
     claims = {:v => 0, :iat => iat, :d => d}.merge(opts)
     # http://tools.ietf.org/html/draft-ietf-jose-json-web-signature-26
@@ -106,7 +107,7 @@ module RestFirebase::Client
   def default_iat     ; Time.now.to_i  ; end
 
   def check_auth
-    self.auth, self.iat = nil if Time.now.to_i - iat > auth_ttl
+    self.auth = nil if auth_ttl && Time.now.to_i - iat > auth_ttl
   end
 end
 
