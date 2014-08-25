@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.authors = [
   "Codementor",
   "Lin Jen-Shin (godfat)"]
-  s.date = "2014-08-20"
+  s.date = "2014-08-25"
   s.description = "Ruby Firebase REST API client built on top of [rest-core][].\n\n[rest-core]: https://github.com/godfat/rest-core"
   s.email = ["help@codementor.io"]
   s.files = [

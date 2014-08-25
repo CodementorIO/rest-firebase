@@ -65,6 +65,12 @@ f = RestFirebase.new :site => 'https://SampleChat.firebaseIO-demo.com/',
                      :secret => 'secret',
                      :d => {:auth_data => 'something'},
                      :log_method => method(:puts),
+                     # `auth_ttl` describes when we should refresh the auth
+                     # token. Set it to `false` to disable auto-refreshing.
+                     # The default is 23 hours.
+                     :auth_ttl => 82800,
+                     # `auth` is the auth token from Firebase. Leave it alone
+                     # to auto-generate. Set it to `false` to disable it.
                      :auth => false # Ignore auth for this example!
 
 @reconnect = true
