@@ -61,13 +61,15 @@ SSE
 
   would 'refresh token' do
     mock(Time).now{ Time.at(0) }
-    auth = firebase.auth
+    auth, query = firebase.auth, firebase.query
+    query[:auth].should.eq auth
     Muack.verify(Time)
     stub(Time).now{ Time.at(86400) }
 
     stub_request(:get, path).to_return(:body => 'true')
     firebase.get('https://a').should.eq true
-    firebase.auth.should.not.eq auth
+    firebase.auth .should.not.eq auth
+    firebase.query.should.not.eq query
   end
 
   define_method :check do |status, klass|

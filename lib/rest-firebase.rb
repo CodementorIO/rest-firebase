@@ -99,9 +99,12 @@ module RestFirebase::Client
     "#{input}.#{base64url(Hmac.sha256(secret, input))}"
   end
 
+  def query
+    {:auth => auth}
+  end
+
   private
   def base64url str; [str].pack('m').tr('+/', '-_'); end
-  def default_query   ; {:auth => auth}; end
   def default_auth    ; generate_auth  ; end
   def default_auth_ttl; 82800          ; end
   def default_iat     ; Time.now.to_i  ; end
@@ -114,4 +117,5 @@ end
 class RestFirebase
   include RestFirebase::Client
   self.event_source_class = EventSource
+  const_get(:Struct).send(:remove_method, :query=)
 end
