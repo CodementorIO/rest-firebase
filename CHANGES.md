@@ -1,5 +1,10 @@
 # CHANGES
 
+## rest-firebase 0.9.4 -- 2014-09-01
+
+* Should really properly refresh the auth (query)
+* From now on you're not allowed to change the value of query.
+
 ## rest-firebase 0.9.3 -- 2014-08-25
 
 * Adopted rest-core 3.3.0
