@@ -12,7 +12,7 @@ Pork::API.describe RestFirebase do
     Muack.verify
   end
 
-  path = 'https://a.json?auth=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9%0A.eyJ2IjowLCJpYXQiOjg2NDAwLCJkIjpudWxsfQ%3D%3D%0A.cAZWmKD66jARF-BXEi5J1aqJ6khDbFdPAfAqXVbGpZk%3D%0A'
+  path = 'https://a.json?auth=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2IjowLCJpYXQiOjg2NDAwLCJkIjpudWxsfQ%3D%3D.SSmw2fUYiQFyYlsFV8WmyQsOCWJ6yvC7aw3bRpwQOYo%3D'
 
   json = '{"status":"ok"}'
   rbon = {'status' => 'ok'}
