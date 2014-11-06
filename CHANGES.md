@@ -1,5 +1,9 @@
 # CHANGES
 
+## rest-firebase 0.9.5 -- 2014-11-07
+
+* Base64url encoded JWT would no longer contain any newlines.
+
 ## rest-firebase 0.9.4 -- 2014-09-01
 
 * Should really properly refresh the auth (query)
