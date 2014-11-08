@@ -18,6 +18,9 @@ gem 'multi_json'
 
 gem 'rack'
 
+gem 'simplecov', :require => false if ENV['COV']
+gem 'coveralls', :require => false if ENV['CI']
+
 platforms :ruby do
   gem 'yajl-ruby'
 end

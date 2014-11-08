@@ -21,3 +21,7 @@ Gemgem.init(dir) do |s|
   # exclude rest-core
   s.files.reject!{ |f| f.start_with?('rest-core/') }
 end
+
+task 'test' do
+  SimpleCov.add_filter('rest-core/lib') if ENV['COV'] || ENV['CI']
+end

@@ -1,4 +1,4 @@
-# rest-firebase [![Build Status](https://secure.travis-ci.org/CodementorIO/rest-firebase.png?branch=master)](http://travis-ci.org/CodementorIO/rest-firebase)
+# rest-firebase [![Build Status](https://secure.travis-ci.org/CodementorIO/rest-firebase.png?branch=master)](http://travis-ci.org/CodementorIO/rest-firebase) [![Coverage Status](https://coveralls.io/repos/CodementorIO/rest-firebase/badge.png)](https://coveralls.io/r/CodementorIO/rest-firebase)
 
 by [Codementor][]
 
