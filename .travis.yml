@@ -1,10 +1,11 @@
-before_install: 'git submodule update --init'
-script: 'ruby -r bundler/setup -S rake test'
 
+language: ruby
 rvm:
   - 1.9
   - 2.0
   - 2.1
-  - ruby
   - rbx-2
   - jruby
+
+install: 'bundle install --retry=3'
+script: 'ruby -r bundler/setup -S rake test'
