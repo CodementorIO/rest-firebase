@@ -15,6 +15,7 @@ RestFirebase = RC::Builder.client(:d, :secret, :auth, :auth_ttl, :iat) do
   use RC::CommonLogger  , nil
   use RC::ErrorHandler  , lambda{ |env| RestFirebase::Error.call(env) }
   use RC::ErrorDetectorHttp
+  use RC::JsonRequest   , true
   use RC::JsonResponse  , true
   use RC::Cache         , nil, 600
 end
@@ -75,15 +76,7 @@ module RestFirebase::Client
 
   def request env, app=app
     check_auth
-
-    path = "#{env[REQUEST_PATH]}.json"
-    payload = if env[REQUEST_PAYLOAD]
-      {REQUEST_PAYLOAD => Json.encode(env[REQUEST_PAYLOAD])}
-    else
-      {}
-    end
-
-    super(env.merge(REQUEST_PATH => path).merge(payload), app)
+    super(env.merge(REQUEST_PATH => "#{env[REQUEST_PATH]}.json"), app)
   end
 
   def generate_auth opts={}
