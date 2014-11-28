@@ -96,6 +96,9 @@ p f.post('users/tom', :some => 'other')
 p f.get('users/tom')
 p f.delete('users/tom')
 
+# With Firebase queries (it would encode query in JSON for you)
+p f.get('users/tom', :orderBy => '$key', :limitToFirst => 1)
+
 # Need to tell onreconnect stops reconnecting, or even if we close
 # the connection manually, it would still try to reconnect again.
 @reconnect = false

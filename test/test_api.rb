@@ -26,6 +26,13 @@ Pork::API.describe RestFirebase do
     firebase.get('https://a').should.eq true
   end
 
+  would 'get with query' do
+    stub_request(:get, "#{path}&orderBy=%22date%22&limitToFirst=1").
+      to_return(:body => json)
+    firebase.get('https://a', :orderBy => 'date', :limitToFirst => 1).
+      should.eq rbon
+  end
+
   would 'put {"status":"ok"}' do
     stub_request(:put, path).with(:body => json).to_return(:body => json)
     firebase.put('https://a', rbon).should.eq rbon

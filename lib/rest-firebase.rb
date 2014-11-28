@@ -3,6 +3,7 @@ require 'rest-core'
 
 # https://www.firebase.com/docs/security/custom-login.html
 # https://www.firebase.com/docs/rest-api.html
+# https://www.firebase.com/docs/rest/guide/retrieving-data.html#section-rest-queries
 RestFirebase = RC::Builder.client(:d, :secret, :auth, :auth_ttl, :iat) do
   use RC::Timeout       , 10
 
@@ -76,7 +77,12 @@ module RestFirebase::Client
 
   def request env, app=app
     check_auth
-    super(env.merge(REQUEST_PATH => "#{env[REQUEST_PATH]}.json"), app)
+    query = env[REQUEST_QUERY].inject({}) do |q, (k, v)|
+      q[k] = Json.encode(v)
+      q
+    end
+    super(env.merge(REQUEST_PATH => "#{env[REQUEST_PATH]}.json",
+                    REQUEST_QUERY => query), app)
   end
 
   def generate_auth opts={}
