@@ -1,5 +1,17 @@
 # CHANGES
 
+## rest-firebase 1.0.0 -- ?
+
+### Enhancement
+
+* Encode query in JSON to make using [Firebase queries][] easy.
+
+[Firebase queries]: https://www.firebase.com/docs/rest/guide/retrieving-data.html#section-rest-queries
+
+### Internal Enhancement
+
+* Encode payload in JSON with middleware from rest-core
+
 ## rest-firebase 0.9.5 -- 2014-11-07
 
 * Base64url encoded JWT would no longer contain any newlines.
