@@ -65,6 +65,14 @@ f = RestFirebase.new :site => 'https://SampleChat.firebaseIO-demo.com/',
                      :secret => 'secret',
                      :d => {:auth_data => 'something'},
                      :log_method => method(:puts),
+                     # `timeout` in seconds
+                     :timeout => 10,
+                     # `max_retries` upon failures
+                     :max_retries => 3,
+                     # `retry_exceptions` for which exceptions should retry
+                     # Default is: `[IOError, SystemCallError]`
+                     :retry_exceptions =>
+                       [IOError, SystemCallError, Timeout::Error],
                      # `auth_ttl` describes when we should refresh the auth
                      # token. Set it to `false` to disable auto-refreshing.
                      # The default is 23 hours.

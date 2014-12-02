@@ -5,19 +5,19 @@ require 'rest-core'
 # https://www.firebase.com/docs/rest-api.html
 # https://www.firebase.com/docs/rest/guide/retrieving-data.html#section-rest-queries
 RestFirebase = RC::Builder.client(:d, :secret, :auth, :auth_ttl, :iat) do
-  use RC::Timeout       , 10
-
   use RC::DefaultSite   , 'https://SampleChat.firebaseIO-demo.com/'
   use RC::DefaultHeaders, {'Accept' => 'application/json',
                            'Content-Type' => 'application/json'}
   use RC::DefaultQuery  , nil
 
+  use RC::Retry         , 0, RC::Retry::DefaultRetryExceptions
+  use RC::Timeout       , 10
   use RC::FollowRedirect, 1
-  use RC::CommonLogger  , nil
   use RC::ErrorHandler  , lambda{ |env| RestFirebase::Error.call(env) }
   use RC::ErrorDetectorHttp
   use RC::JsonRequest   , true
   use RC::JsonResponse  , true
+  use RC::CommonLogger  , nil
   use RC::Cache         , nil, 600
 end
 
