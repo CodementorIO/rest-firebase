@@ -1,10 +1,12 @@
 # CHANGES
 
-## rest-firebase 1.0.0 -- ?
+## rest-firebase 1.0.0 -- 2014-12-09
 
 ### Enhancement
 
 * Encode query in JSON to make using [Firebase queries][] easy.
+* Introduced `max_retries`, `retry_exceptions`, and `error_callback` from
+  latest rest-core (3.5.0+). See README.md for detail.
 
 [Firebase queries]: https://www.firebase.com/docs/rest/guide/retrieving-data.html#section-rest-queries
 

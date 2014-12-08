@@ -16,7 +16,7 @@ Gemgem.init(dir) do |s|
   s.authors  = ['Codementor', 'Lin Jen-Shin (godfat)']
   s.email    = ['help@codementor.io']
 
-  %w[rest-core].each{ |g| s.add_runtime_dependency(g, '>=3.3.0') }
+  %w[rest-core].each{ |g| s.add_runtime_dependency(g, '>=3.5.0') }
 
   # exclude rest-core
   s.files.reject!{ |f| f.start_with?('rest-core/') }
