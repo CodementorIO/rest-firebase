@@ -103,7 +103,7 @@ module RestFirebase::Client
   end
 
   private
-  def base64url str; [str].pack('m0').tr("+/\n", '-_'); end
+  def base64url str; [str].pack('m0').tr('+/', '-_'); end
   def default_auth    ; generate_auth  ; end
   def default_auth_ttl; 82800          ; end
   def default_iat     ; Time.now.to_i  ; end
