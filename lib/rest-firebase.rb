@@ -75,14 +75,14 @@ module RestFirebase::Client
     end
   end
 
-  def request env, app=app
+  def request env, a=app
     check_auth
     query = env[REQUEST_QUERY].inject({}) do |q, (k, v)|
       q[k] = Json.encode(v)
       q
     end
     super(env.merge(REQUEST_PATH => "#{env[REQUEST_PATH]}.json",
-                    REQUEST_QUERY => query), app)
+                    REQUEST_QUERY => query), a)
   end
 
   def generate_auth opts={}
