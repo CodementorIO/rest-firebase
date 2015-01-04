@@ -1,5 +1,9 @@
 # CHANGES
 
+## rest-firebase 1.0.1 -- 2015-01-04
+
+* Ruby 2.2 compatibility
+
 ## rest-firebase 1.0.0 -- 2014-12-09
 
 ### Enhancement

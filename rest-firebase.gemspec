@@ -1,16 +1,16 @@
 # -*- encoding: utf-8 -*-
-# stub: rest-firebase 1.0.0 ruby lib
+# stub: rest-firebase 1.0.1 ruby lib
 
 Gem::Specification.new do |s|
   s.name = "rest-firebase"
-  s.version = "1.0.0"
+  s.version = "1.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = [
   "Codementor",
   "Lin Jen-Shin (godfat)"]
-  s.date = "2014-12-09"
+  s.date = "2015-01-04"
   s.description = "Ruby Firebase REST API client built on top of [rest-core][].\n\n[rest-core]: https://github.com/godfat/rest-core"
   s.email = ["help@codementor.io"]
   s.files = [
