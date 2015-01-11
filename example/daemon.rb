@@ -9,7 +9,7 @@ es.onerror do |error|
 end
 
 es.onreconnect do
-  !!@start
+  !!@start # always reconnect unless stopping
 end
 
 es.onmessage do |event, data|
@@ -22,15 +22,15 @@ es.start
 
 rd, wr = IO.pipe
 
-Signal.trap('INT') do
+Signal.trap('INT') do # intercept ctrl-c
   puts "Stopping..."
-  @start = false
-  es.close
-  es.wait
-  wr.puts
+  @start = false      # stop reconnecting
+  es.close            # close socket
+  es.wait             # wait for shutting down
+  wr.puts             # unblock main thread
 end
 
-rd.gets
+rd.gets               # main thread blocks here
 
 # Now try:
 # curl -X POST -d '{"message": "Hi!"}' https://SampleChat.firebaseIO-demo.com/godfat.json
