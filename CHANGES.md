@@ -1,5 +1,9 @@
 # CHANGES
 
+## rest-firebase 1.0.2 -- 2015-06-12
+
+* Fixed a bug where it would try to encode JSON twice upon retrying.
+
 ## rest-firebase 1.0.1 -- 2015-01-04
 
 * Ruby 2.2 compatibility
