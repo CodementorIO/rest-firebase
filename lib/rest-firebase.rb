@@ -9,13 +9,13 @@ RestFirebase = RC::Builder.client(:d, :secret, :auth, :auth_ttl, :iat) do
   use RC::DefaultHeaders, {'Accept' => 'application/json',
                            'Content-Type' => 'application/json'}
   use RC::DefaultQuery  , nil
+  use RC::JsonRequest   , true
 
   use RC::Retry         , 0, RC::Retry::DefaultRetryExceptions
   use RC::Timeout       , 10
   use RC::FollowRedirect, 1
   use RC::ErrorHandler  , lambda{ |env| RestFirebase::Error.call(env) }
   use RC::ErrorDetectorHttp
-  use RC::JsonRequest   , true
   use RC::JsonResponse  , true
   use RC::CommonLogger  , nil
   use RC::Cache         , nil, 600

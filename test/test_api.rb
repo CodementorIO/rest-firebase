@@ -79,6 +79,18 @@ SSE
     firebase.query.should.not.eq query
   end
 
+  would 'not double encode json upon retrying' do
+    stub_request(:post, path).
+      to_return(:body => '{}', :status => 500).times(1).then.
+      to_return(:body => '[]', :status => 200).times(1).
+        with(:body => '{"is":"ok"}')
+
+    firebase.retry_exceptions = [TrueClass]
+    firebase.max_retries      = 1
+    firebase.error_handler    = false
+    expect(firebase.post(path, :is => :ok)).eq([])
+  end
+
   define_method :check do |status, klass|
     stub_request(:delete, path).to_return(
       :body => '{}', :status => status)
