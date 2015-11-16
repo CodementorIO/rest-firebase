@@ -10,12 +10,14 @@
   really needs more than 5 redirects, you could also workaround this by
   setting `max_redirects` to another number while setting up the client.
   For example:
+
   ``` ruby
   client = RestFirebase.new(:max_redirects => 10)
   # or
   client = RestFirebase.new
   client.max_redirects = 10
   ```
+
   This works for any version of rest-firebase. Thanks @chanibarin
   See: <https://github.com/CodementorIO/rest-firebase/pull/7>
 
