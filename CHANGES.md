@@ -1,5 +1,23 @@
 # CHANGES
 
+## rest-firebase 1.0.3 -- 2015-11-16
+
+### Bugs fixed
+
+* Raise the default `max_redirects` from 1 to 5 because Firebase introduced
+  an extra redirect for EventSource. 2 is enough in theory but to make it
+  more future compatible, we set the default to 5 for now. If Firebase
+  really needs more than 5 redirects, you could also workaround this by
+  setting `max_redirects` to another number while setting up the client.
+  For example:
+  ``` ruby
+  client = RestFirebase.new(:max_redirects => 10)
+  # or
+  client = RestFirebase.new
+  client.max_redirects = 10
+  ```
+  This works for any version of rest-firebase.
+
 ## rest-firebase 1.0.2 -- 2015-06-12
 
 * Fixed a bug where it would try to encode JSON twice upon retrying.

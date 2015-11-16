@@ -10,7 +10,7 @@ $LOAD_PATH.unshift(File.expand_path("#{dir}/rest-core/lib"))
 
 Gemgem.init(dir) do |s|
   s.name     = 'rest-firebase'
-  s.version  = '1.0.2'
+  s.version  = '1.0.3'
   s.homepage = 'https://github.com/CodementorIO/rest-firebase'
 
   s.authors  = ['Codementor', 'Lin Jen-Shin (godfat)']
