@@ -16,7 +16,8 @@
   client = RestFirebase.new
   client.max_redirects = 10
   ```
-  This works for any version of rest-firebase.
+  This works for any version of rest-firebase. Thanks @chanibarin
+  See: <https://github.com/CodementorIO/rest-firebase/pull/7>
 
 ## rest-firebase 1.0.2 -- 2015-06-12
 

@@ -211,6 +211,7 @@ If you're using unicorn, you probably want to put that in the config.
 ## CONTRIBUTORS:
 
 * Lin Jen-Shin (@godfat)
+* Yoshihiro Ibayashi (@chanibarin)
 
 ## LICENSE:
 
