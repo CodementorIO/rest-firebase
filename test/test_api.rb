@@ -4,6 +4,7 @@ require 'rest-core/test'
 
 Pork::API.describe RestFirebase do
   before do
+    stub_select_for_stringio
     stub(Time).now{ Time.at(86400) }
   end
 
