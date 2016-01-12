@@ -75,6 +75,7 @@ SSE
   end
 
   would 'refresh token' do
+    firebase # initialize http-client first (it's using Time.now too)
     mock(Time).now{ Time.at(0) }
     auth, query = firebase.auth, firebase.query
     query[:auth].should.eq auth
