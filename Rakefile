@@ -2,7 +2,7 @@
 begin
   require "#{dir = File.dirname(__FILE__)}/task/gemgem"
 rescue LoadError
-  sh 'git submodule update --init'
+  sh 'git submodule update --init --recursive'
   exec Gem.ruby, '-S', $PROGRAM_NAME, *ARGV
 end
 
