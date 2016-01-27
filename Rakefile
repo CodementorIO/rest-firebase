@@ -7,6 +7,7 @@ rescue LoadError
 end
 
 $LOAD_PATH.unshift(File.expand_path("#{dir}/rest-core/lib"))
+$LOAD_PATH.unshift(File.expand_path("#{dir}/rest-core/promise_pool/lib"))
 
 Gemgem.init(dir) do |s|
   s.name     = 'rest-firebase'
