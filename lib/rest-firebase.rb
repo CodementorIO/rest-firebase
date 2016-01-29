@@ -1,28 +1,30 @@
 
 require 'rest-core'
+require 'rest-core/util/json'
+require 'rest-core/util/hmac'
 
 # https://www.firebase.com/docs/security/custom-login.html
 # https://www.firebase.com/docs/rest-api.html
 # https://www.firebase.com/docs/rest/guide/retrieving-data.html#section-rest-queries
-RestFirebase = RC::Builder.client(:d, :secret, :auth, :auth_ttl, :iat) do
-  use RC::DefaultSite   , 'https://SampleChat.firebaseIO-demo.com/'
-  use RC::DefaultHeaders, {'Accept' => 'application/json',
-                           'Content-Type' => 'application/json'}
-  use RC::DefaultQuery  , nil
-  use RC::JsonRequest   , true
+RestFirebase =
+  RestCore::Builder.client(:d, :secret, :auth, :auth_ttl, :iat) do
+    use RestCore::DefaultSite   , 'https://SampleChat.firebaseIO-demo.com/'
+    use RestCore::DefaultHeaders, {'Accept' => 'application/json',
+                             'Content-Type' => 'application/json'}
+    use RestCore::DefaultQuery  , nil
+    use RestCore::JsonRequest   , true
 
-  use RC::Retry         , 0, RC::Retry::DefaultRetryExceptions
-  use RC::Timeout       , 10
-  use RC::FollowRedirect, 5
-  use RC::ErrorHandler  , lambda{ |env| RestFirebase::Error.call(env) }
-  use RC::ErrorDetectorHttp
-  use RC::JsonResponse  , true
-  use RC::CommonLogger  , nil
-  use RC::Cache         , nil, 600
-end
+    use RestCore::Retry         , 0, RestCore::Retry::DefaultRetryExceptions
+    use RestCore::Timeout       , 10
+    use RestCore::FollowRedirect, 5
+    use RestCore::ErrorHandler  , lambda{|env| RestFirebase::Error.call(env)}
+    use RestCore::ErrorDetectorHttp
+    use RestCore::JsonResponse  , true
+    use RestCore::CommonLogger  , nil
+    use RestCore::Cache         , nil, 600
+  end
 
 class RestFirebase::Error < RestCore::Error
-  include RestCore
   class ServerError         < RestFirebase::Error; end
   class ClientError         < RestCore::Error; end
 
@@ -44,8 +46,9 @@ class RestFirebase::Error < RestCore::Error
   end
 
   def self.call env
-    error, code, url = env[RESPONSE_BODY], env[RESPONSE_STATUS],
-                       env[REQUEST_URI]
+    error, code, url = env[RestCore::RESPONSE_BODY],
+                       env[RestCore::RESPONSE_STATUS],
+                       env[RestCore::REQUEST_URI]
     return new(error, code, url) unless error.kind_of?(Hash)
     case code
       when 400; BadRequest
@@ -63,12 +66,10 @@ class RestFirebase::Error < RestCore::Error
 end
 
 module RestFirebase::Client
-  include RestCore
-
   class EventSource < RestCore::EventSource
     def onmessage event=nil, data=nil, sock=nil
       if event
-        super(event, Json.decode(data), sock)
+        super(event, RestCore::Json.decode(data), sock)
       else
         super
       end
@@ -77,12 +78,13 @@ module RestFirebase::Client
 
   def request env, a=app
     check_auth
-    query = env[REQUEST_QUERY].inject({}) do |q, (k, v)|
-      q[k] = Json.encode(v)
+    query = env[RestCore::REQUEST_QUERY].inject({}) do |q, (k, v)|
+      q[k] = RestCore::Json.encode(v)
       q
     end
-    super(env.merge(REQUEST_PATH => "#{env[REQUEST_PATH]}.json",
-                    REQUEST_QUERY => query), a)
+    super(env.merge(RestCore::REQUEST_PATH =>
+                      "#{env[RestCore::REQUEST_PATH]}.json",
+                    RestCore::REQUEST_QUERY => query), a)
   end
 
   def generate_auth opts={}
@@ -93,9 +95,10 @@ module RestFirebase::Client
     header = {:typ => 'JWT', :alg => 'HS256'}
     claims = {:v => 0, :iat => iat, :d => d}.merge(opts)
     # http://tools.ietf.org/html/draft-ietf-jose-json-web-signature-26
-    input = [header, claims].map{ |d| base64url(Json.encode(d)) }.join('.')
+    input = [header, claims].map{ |d| base64url(RestCore::Json.encode(d)) }.
+            join('.')
     # http://tools.ietf.org/html/draft-ietf-oauth-json-web-token-20
-    "#{input}.#{base64url(Hmac.sha256(secret, input))}"
+    "#{input}.#{base64url(RestCore::Hmac.sha256(secret, input))}"
   end
 
   def query
