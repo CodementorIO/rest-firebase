@@ -1,6 +1,6 @@
 
 require 'rest-firebase'
-require 'rest-core/test'
+require 'rest-builder/test'
 
 Pork::API.describe RestFirebase do
   before do

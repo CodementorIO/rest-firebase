@@ -6,8 +6,9 @@ rescue LoadError
   exec Gem.ruby, '-S', $PROGRAM_NAME, *ARGV
 end
 
-$LOAD_PATH.unshift(File.expand_path("#{dir}/rest-core/lib"))
-$LOAD_PATH.unshift(File.expand_path("#{dir}/rest-core/promise_pool/lib"))
+%w[lib rest-builder/lib rest-builder/promise_pool/lib].each do |path|
+  $LOAD_PATH.unshift(File.expand_path("#{dir}/rest-core/#{path}"))
+end
 
 Gemgem.init(dir) do |s|
   s.name     = 'rest-firebase'
