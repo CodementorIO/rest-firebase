@@ -1,5 +1,9 @@
 # CHANGES
 
+## rest-firebase 1.1.0 -- 2016-02-04
+
+* Adopted rest-core 4.0.0
+
 ## rest-firebase 1.0.3 -- 2015-11-16
 
 ### Bugs fixed
