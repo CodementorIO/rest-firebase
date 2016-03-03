@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.authors = [
   "Codementor".freeze,
   "Lin Jen-Shin (godfat)".freeze]
-  s.date = "2016-02-04"
+  s.date = "2016-03-03"
   s.description = "Ruby Firebase REST API client built on top of [rest-core][].\n\n[rest-core]: https://github.com/godfat/rest-core".freeze
   s.email = ["help@codementor.io".freeze]
   s.files = [
@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   "test/test_api.rb".freeze]
   s.homepage = "https://github.com/CodementorIO/rest-firebase".freeze
   s.licenses = ["Apache License 2.0".freeze]
-  s.rubygems_version = "2.5.2".freeze
+  s.rubygems_version = "2.6.1".freeze
   s.summary = "Ruby Firebase REST API client built on top of [rest-core][].".freeze
   s.test_files = ["test/test_api.rb".freeze]
 
