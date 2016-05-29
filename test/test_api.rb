@@ -2,6 +2,8 @@
 require 'rest-firebase'
 require 'rest-builder/test'
 
+Pork.protected_exceptions << WebMock::NetConnectNotAllowedError
+
 Pork::API.describe RestFirebase do
   before do
     stub_select_for_stringio
