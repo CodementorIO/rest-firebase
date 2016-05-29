@@ -67,7 +67,7 @@ SSE
     m = [{'event' => 'put'       , 'data' => {}},
          {'event' => 'keep-alive', 'data' => nil}]
     es = firebase.event_source('https://a')
-    es.should.kind_of? RestFirebase::Client::EventSource
+    es.should.kind_of? RestFirebase::EventSource
     es.onmessage do |event, data|
       {'event' => event, 'data' => data}.should.eq m.shift
     end.onerror do |error|
