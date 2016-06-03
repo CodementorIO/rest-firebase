@@ -63,7 +63,7 @@ RestFirebase::Client2 = RestFirebase
 class RestFirebase::Client3 < RestFirebaseBase
   AUD = 'https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit'
 
-  attr_accessor :claims, :private_key, :service_account, :uid
+  attr_accessor :claims, :private_key, :service_account, :uid, :kid
 
   def generate_auth opts={}
     raise Error::ClientError.new("Please set your private_key") unless
@@ -72,11 +72,11 @@ class RestFirebase::Client3 < RestFirebaseBase
       service_account
 
       self.iat = nil
-      header = {:typ => 'JWT', :alg => 'RS256'}
-      claims = {:iss => service_account, :sub => service_account,
-                :aud => AUD, :iat => iat, :claims => claims,
-                :exp => iat + 3600, :uid => :uid}.merge(opts)
-      generate_jwt(header, claims)
+      jwt_header = {:typ => 'JWT', :alg => 'RS256', :kid => kid}
+      jwt_claims = {:iss => service_account, :sub => service_account,
+                    :aud => AUD, :iat => iat, :claims => claims,
+                    :exp => iat + 3600, :uid => uid}.merge(opts)
+      generate_jwt(jwt_header, jwt_claims)
   end
 
   def sign input
