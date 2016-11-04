@@ -9,6 +9,7 @@ by [Codementor][]
 * [github](https://github.com/CodementorIO/rest-firebase)
 * [rubygems](https://rubygems.org/gems/rest-firebase)
 * [rdoc](http://rdoc.info/projects/CodementorIO/rest-firebase)
+* [issues](https://github.com/CodementorIO/rest-firebase/issues) (feel free to ask for support)
 
 ## DESCRIPTION:
 
