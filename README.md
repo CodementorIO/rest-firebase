@@ -1,5 +1,7 @@
 # rest-firebase [![Build Status](https://secure.travis-ci.org/CodementorIO/rest-firebase.png?branch=master)](http://travis-ci.org/CodementorIO/rest-firebase) [![Coverage Status](https://coveralls.io/repos/github/CodementorIO/rest-firebase/badge.png)](https://coveralls.io/github/CodementorIO/rest-firebase) [![Join the chat at https://gitter.im/CodementorIO/rest-firebase](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/CodementorIO/rest-firebase)
 
+[![Join the chat at https://gitter.im/CodementorIO/rest-firebase](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/CodementorIO/rest-firebase?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 by [Codementor][]
 
 [Codementor]: https://www.codementor.io/
