@@ -15,4 +15,5 @@ matrix:
     - rvm: rbx
 
   allow_failures:
+    - rvm: 2.4
     - rvm: rbx
