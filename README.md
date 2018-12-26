@@ -26,7 +26,7 @@ Ruby Firebase REST API client built on top of [rest-core][].
 
 ### Mandatory:
 
-* Tested with MRI (official CRuby), Rubinius and JRuby.
+* Tested with MRI (official CRuby) and JRuby.
 * gem [rest-core][]
 * gem [httpclient][]
 * gem [mime-types][]
@@ -218,7 +218,7 @@ If you're using unicorn, you probably want to put that in the config.
 
 Apache License 2.0 (Apache-2.0)
 
-Copyright (c) 2014-2018, Codementor
+Copyright (c) 2014-2019, Codementor
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
